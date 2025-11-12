@@ -1,25 +1,24 @@
-import React from 'react';
-import { CButton } from '@coreui/react';
-import { useAuth } from '../../auth/AuthContext';
+import React from "react";
+import { CButton } from "@coreui/react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../auth/AuthContext'
 
 const LogoutButton = () => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await logout();
+      navigate("/login"); // Chuyển về trang đăng nhập
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Lỗi khi đăng xuất:", error);
     }
   };
 
   return (
-    <CButton 
-      color="danger" 
-      className="px-4" 
-      onClick={handleLogout}
-    >
-      Đăng xuất
+    <CButton color="secondary" onClick={handleLogout}>
+      Đăng Xuất
     </CButton>
   );
 };
