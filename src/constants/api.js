@@ -14,6 +14,10 @@ export const API_ENDPOINTS = {
 
   // Settings
   SETTINGS_PRICING: '/api/settings',
+
+  // Posts
+  POSTS: '/api/posts',
+  POST_DETAIL: (id) => `/api/posts/${id}`,
 };
 
 // API Response Status

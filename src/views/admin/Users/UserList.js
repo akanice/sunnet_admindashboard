@@ -18,6 +18,7 @@ import {
 import AppHorizontalBar from 'src/components/AppHorizontalBar'
 import EditUserModal from '../Modals/EditUserModal'
 import ChangePasswordModal from '../Modals/ChangePasswordModal'
+import UserPostsModal from '../Modals/UserPostsModal'
 import useApi from '../../../hooks/useApi'
 import { usersApi } from '../../../services/api'
 
@@ -56,6 +57,7 @@ const Users = () => {
   const [detailLoading, setDetailLoading] = useState(false)
   const [saveLoading, setSaveLoading] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState('')
+  const [postsModalUser, setPostsModalUser] = useState(null)
 
   // Fetch users list
   const {
@@ -71,7 +73,7 @@ const Users = () => {
         sortedBy: 'desc',
         include: 'roles',
         searchFields: 'roles.role_id:in',
-        search: 'roles.role_id:1',
+        search: 'roles.role_id:2',
         ...(searchQuery ? { search: searchQuery } : {}),
       })
     },
@@ -242,7 +244,17 @@ const Users = () => {
                       <CTableDataCell>{user.phone}</CTableDataCell>
                       <CTableDataCell>{user.email}</CTableDataCell>
                       <CTableDataCell>
-                        <CButton color="warning" size="sm" className='me-2' onClick={() => handleEditUser(user)}>Xem</CButton>
+                        <CButton color="warning" size="sm" className="me-2" onClick={() => handleEditUser(user)}>
+                          Xem
+                        </CButton>
+                        <CButton
+                          color="info"
+                          size="sm"
+                          className="me-2"
+                          onClick={() => setPostsModalUser(user)}
+                        >
+                          Post
+                        </CButton>
                         <CButton
                           color="secondary"
                           size="sm"
@@ -283,7 +295,13 @@ const Users = () => {
             onClose={() => setModalVisible(false)}
           />
         )}
-        
+
+        <UserPostsModal
+          visible={!!postsModalUser}
+          user={postsModalUser}
+          onClose={() => setPostsModalUser(null)}
+        />
+
       </CRow>
       )}
     </>

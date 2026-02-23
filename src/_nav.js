@@ -39,8 +39,13 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Danh sách thành viên',
+        name: 'Quản trị viên',
         to: '/users',
+      },
+      {
+        component: CNavItem,
+        name: 'Danh sách user',
+        to: '/users/list',
       },
       {
         component: CNavItem,
@@ -54,7 +59,19 @@ const _nav = [
       },
     ]
   },
-  
+  {
+    component: CNavGroup,
+    name: 'Bài đăng/Post',
+    to: '/posts',
+    icon: <CIcon icon={cilDescription} className="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Danh sách post',
+        to: '/posts/list',
+      },
+    ]
+  },
 ]
 
 export default _nav

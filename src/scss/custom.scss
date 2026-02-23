@@ -1,1 +1,22 @@
 // Custom styles
+
+/**
+ * Cấu hình font chữ Lexend từ Google Fonts cho toàn bộ dự án
+ * Áp dụng font Lexend làm font mặc định cho body và tất cả các phần tử
+ */
+body,
+html {
+  font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Áp dụng font Lexend cho tất cả các phần tử
+* {
+  font-family: inherit;
+}
+body {
+  font-size: 14px;
+}

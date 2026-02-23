@@ -117,6 +117,62 @@ export const usersApi = {
   },
 };
 
+/**
+ * Posts API – Lấy danh sách bài viết, theo user, và xóa bài viết.
+ * @description
+ * - getAll: GET /api/posts với tham số tìm kiếm (user, phone, content).
+ * - getByUserId: GET /api/posts?search=user.id:{userId}&searchFields=content:like;user.id:=
+ * - deletePost: DELETE /api/posts/:id
+ */
+export const postsApi = {
+  /**
+   * Lấy danh sách tất cả bài viết với bộ lọc tùy chọn.
+   * @param {Object} params - Tham số query: page, limit, orderBy, sortedBy, search, searchFields, include (user).
+   * @returns {Promise<Object>} Trả về data chứa danh sách bài viết (data.data là mảng posts).
+   */
+  getAll: async (params = {}) => {
+    try {
+      const response = await axiosInstance.get(API_ENDPOINTS.POSTS, { params });
+      return response.data;
+    } catch (error) {
+      throw handleApiError(error);
+    }
+  },
+  /**
+   * Lấy danh sách bài viết theo id người dùng.
+   * @param {number|string} userId - ID người dùng.
+   * @param {Object} params - Tham số query bổ sung (page, limit, ...).
+   * @returns {Promise<Object>} Trả về data chứa danh sách bài viết.
+   */
+  getByUserId: async (userId, params = {}) => {
+    try {
+      const response = await axiosInstance.get(API_ENDPOINTS.POSTS, {
+        params: {
+          search: `user.id:${userId}`,
+          searchFields: 'content:like;user.id:=',
+          ...params,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw handleApiError(error);
+    }
+  },
+  /**
+   * Xóa một bài viết theo id.
+   * @param {number|string} id - ID bài viết cần xóa.
+   * @returns {Promise<Object>} Trả về data phản hồi từ server.
+   */
+  deletePost: async (id) => {
+    try {
+      const response = await axiosInstance.delete(API_ENDPOINTS.POST_DETAIL(id));
+      return response.data;
+    } catch (error) {
+      throw handleApiError(error);
+    }
+  },
+};
+
 // Error handler
 const handleApiError = (error) => {
   if (error.response) {
