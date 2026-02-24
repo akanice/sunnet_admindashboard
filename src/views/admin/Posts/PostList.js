@@ -74,7 +74,7 @@ const PostList = () => {
   const buildParams = useCallback(() => {
     const params = {
       page: currentPage,
-      limit: 20,
+      limit: 10, // api này bị khoá limit=10
       orderBy: 'created_at',
       sortedBy: 'desc',
       include: 'user',
@@ -101,9 +101,9 @@ const PostList = () => {
   }, [fetchPosts])
 
   const posts = postsData?.data ?? []
-  const meta = postsData?.meta ?? {}
-  const totalPages = meta?.last_page ?? 1
-  const totalItems = meta?.total ?? posts.length
+  const pagination = postsData?.meta?.pagination ?? {}
+  const totalPages = pagination?.total_pages ?? 1
+  const totalItems = pagination?.total ?? posts.length
 
   const handleSearch = () => {
     setCurrentPage(1)
@@ -213,7 +213,7 @@ const PostList = () => {
                     ) : (
                       posts.map((post, index) => (
                         <CTableRow key={post.id}>
-                          <CTableHeaderCell scope="row">{(currentPage - 1) * 20 + index + 1}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">{(currentPage - 1) * 10 + index + 1}</CTableHeaderCell>
                           <CTableDataCell>{getUserName(post)}</CTableDataCell>
                           <CTableDataCell>{getUserPhone(post)}</CTableDataCell>
                           <CTableDataCell title={post?.content ?? ''}>{truncateContent(post?.content)}</CTableDataCell>
